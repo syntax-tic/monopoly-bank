@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAIA MoNo Bank - Account Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="shortcut icon" href="logo.jpeg">
+  <!-- Include jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <h1 id="mainTitle">PAIA MoNo Bank - Account Registration</h1>
+    <div id="frm">
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" name="fullname" required placeholder="Enter name without spaces">
+        <label for="credit_card">Credit Card Number:</label>
+        <input type="text" id="credit_card" name="credit_card" required placeholder="Credit card">
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" maxlength="4" required placeholder="Max 4 digits">
+        <label>Profile Picture: <input type="file" id="fileInput" accept="image/*" ></label><br>
+        <input type="submit" value="Register" id="submit">
+        <div>Teachable Machine Image Model</div>
+<button type="button" onclick="init()">Start</button>
+<div id="webcam-container"></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close2">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+    <div id="modal2" class="modal2">
+        <div class="modal-content2">
+            <span class="close3">&times;</span>
+            <h1><p id="modal-message2"></p></h1>
+        </div>
+    </div>
+<div class="main">
+    <div class="details" id="details">
+        <div style="display: flex;justify-content: center; align-items: centers;text-align: center;">
+            <h2>
+                <img id="profilePic" src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="Profile Picture"><br>
+                <span id="usrnm" style="color: rgb(255, 106, 0); "></span><br>Balance: <span id="balance">0</span></h2>
+        </div>
+        <div>
+            <h3>Send Money</h3>
+            <label for="toUser">To: <select name="toUser" id="toUser"></select></label>
+            <label for="amount" >Amount: </label>
+            <input type="number" id="amount">
+            <label for="remarks">Remarks: <input type="text" id="remarks" name="remarks"></label>
+            <button id="sendBtn" type="submit"> <img src="send-money-svgrepo-com.svg" alt=""> Send</button>
+            <button id="salary"><img src="salary.gif" alt="" style="width: 20px; height: 20px; margin-right: 2px;">SALARY</button>
+            <button id="receiveBtn"><img src="receive-amount.png" alt="" style="width: 20px; height: 20px; margin-right: 2px;">Receive from Bank</button>
+            <button id="payBankBtn"> <img src="bank.gif" alt=""style="width: 20px; height: 20px; margin-right: 2px;"> Pay Bank</button><br>
+            <button id="loanDetails"> Loan Details</button><br><br> 
+            <div id="loan"> 
+                <label>Amount to be paid: <span id="loanToBePaid">0</span></label>
+                <label for="loanAmount">Loan: <input type="number" id="loanAmount" placeholder="Enter Amount to get loan or pay back loan"></label> 
+                <label for="interest">Interest: <input type="number" id="interest" autocomplete="false"></label> 
+                <button id="getLoan">Take Loan</button>
+                <button id="payLoan">Pay Loan</button>
+            </div>
+        </div>
+        <button id="reloadBtn"><img src="reload.png" alt=""style="width: 20px; height: 20px; margin-right: 2px;">Reload</button><br>
+        <div id="dice-container">
+            <div id="dice1">
+                <div class="face front"><img src="https://storage.needpix.com/rsynced_images/dice-147665_1280.png" alt="1"></div>
+                <div class="face back"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147670_960_720.png" alt="6"></div>
+                <div class="face left"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147668_960_720.png" alt="4"></div>
+                <div class="face right"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147667_960_720.png" alt="3"></div>
+                <div class="face top"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRD6-e9wKhTEkdiPVcXtZpgXWDlMNA3TwM31jVK0QXmh-eaOchGzVQ7CqwlN42dzO1m-k&usqp=CAU" alt="5"></div>
+                <div class="face bottom"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/57/dice-147666_1280.png" alt="2"></div>
+            </div>
+            <div id="dice2">
+                <div class="face front"><img src="https://storage.needpix.com/rsynced_images/dice-147665_1280.png" alt="1"></div>
+                <div class="face back"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147670_960_720.png" alt="6"></div>
+                <div class="face left"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147668_960_720.png" alt="4"></div>
+                <div class="face right"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/dice-147667_960_720.png" alt="3"></div>
+                <div class="face top"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRD6-e9wKhTEkdiPVcXtZpgXWDlMNA3TwM31jVK0QXmh-eaOchGzVQ7CqwlN42dzO1m-k&usqp=CAU" alt="5"></div>
+                <div class="face bottom"><img src="https://cdn.pixabay.com/photo/2013/07/12/13/57/dice-147666_1280.png" alt="2"></div>
+            </div>
+        </div>
+        <button id="roll-button">Roll Dice</button><br>
+        <button id="showCards">Show Cards</button>
+        <div id="pdfContent">
+        <div>
+            <h3>Users <img src="password.png" alt=""style="width: 30px; height: 30px; margin-right: 2px;"></h3>
+            <ul id="users"></ul>
+        </div>
+        
+        <div>
+            <h3>Transaction History <img src="log-in.png" alt=""style="width: 30px; height: 30px; margin-right: 2px;"><button id="showHide"></button></h3>
+            <ul id="transactions"></ul>
+
+        </div>
+        </div>
+    </div>
+    
+    
+    </div>
+    <button id="saveGame">Save game</button><br>
+    <div id="content"></div>
+    
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="client.js"></script>
+    <!-- jsPDF library -->
+<!-- html2canvas library -->
+    <script>
+        const loanDetails = document.getElementById('loanDetails');
+        const loan = document.getElementById('loan');
+        loan.style.display = 'none';
+
+        loanDetails.addEventListener('click',()=>{
+            if(loan.style.display=='none'){
+                loan.style.display="block";
+                loanDetails.textContent = 'Close Loan Details';
+                loanDetails.classList.add('close');
+            }
+            else {
+                loan.style.display="none";
+                loanDetails.textContent = 'Loan Details';
+                loanDetails.classList.remove('close');
+            }
+        })
+        document.getElementById('showHide').addEventListener('click', ()=> {
+            document.getElementById('showHide').classList.toggle('rotate');
+            let a = document.getElementById('transactions');
+            if(a.style.display ==='none'){
+                console.log("shown");
+            document.getElementById('transactions').style.display = 'block';
+            }
+            else {document.getElementById('transactions').style.display = 'none';
+                console.log('hidden');
+            }
+            
+});
+
+
+const fileInput = document.getElementById('fileInput');
+    const profilePic = document.getElementById('profilePic');
+
+    // Add an event listener to the file input
+    fileInput.addEventListener('change', function (event) {
+      const file = event.target.files[0]; // Get the selected file
+
+      // Check if the file is selected and is an image
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader(); // Create a FileReader to read the image
+
+        // Define what happens when the file is read successfully
+        reader.onload = function (e) {
+          profilePic.src = e.target.result; // Set the image as the profile picture
+        };
+
+        // Read the file as a Data URL (which is what <img> needs)
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid image file.');
+      }
+    });
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAIA Monopoly: Playful Adventure, Infinite Amusement!</title>
+  <style> 
+    #users {
+      list-style-type: none;
+    }
+    #transactions {
+      list-style-type: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>PAIA Monopoly: Playful Adventure, Infinite Amusement!</h1>
+  <div>
+    <h2><span id="usrnm"></span><br>Balance: <span id="balance">0</span></h2>
+  </div>
+  <div>
+    <h3>Send Money</h3>
+    <label for="toUser">To: <select name="toUser" id="toUser"></select></label>
+    <label for="amount">Amount: </label>
+    <input type="number" id="amount">
+    <button id="sendBtn">Send</button>
+    <button id="salary">SALARY</button>
+  </div>
+  <div>
+    <h3>Users</h3>
+    <ul id="users"></ul>
+  </div>
+  <div>
+    <h3>Transaction History</h3>
+    <ul id="transactions"></ul>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    
+    const registerBtn = document.getElementById('registerBtn');
+    const reloadBtn = document.getElementById('reloadBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const usernameInput = document.getElementById('username');
+    const toUserInput = document.getElementById('toUser');
+    const amountInput = document.getElementById('amount');
+    const balanceSpan = document.getElementById('balance');
+    const usersList = document.getElementById('users');
+    const transactionsList = document.getElementById('transactions');
+    const usrnm = document.getElementById('usrnm');
+    const salary = document.getElementById('salary');
+    fetch('/register').then(response=>response.json()).then(data=>{
+      console.log(data);
+    }).catch(err=> console.error(err));
+    salary.addEventListener('click', ()=>{
+      socket.emit('salary', usernameInput.value);
+    });
+    registerBtn.addEventListener('click', () => {
+      const username = usernameInput.value;
+      socket.emit('register', username);
+      usrnm.innerHTML = username;
+    });
+    sendBtn.addEventListener('click', () => {
+      const from = usernameInput.value;
+      const to = toUserInput.value;
+      const amount = parseFloat(amountInput.value);
+      socket.emit('sendMoney', { from, to, amount });
+    });
+
+    socket.on('updateUsers', (users) => {
+      usersList.innerHTML = '';
+      toUserInput.innerHTML = '';
+      for (const user in users) {
+        const li = document.createElement('li');
+        li.textContent = `${user}: ${users[user].balance}`;
+        usersList.appendChild(li);
+      }
+      for(const user in users){
+        const op = document.createElement('option');
+        op.setAttribute('value', user);
+        op.textContent = user;
+        toUserInput.append(op);
+      }
+      balanceSpan.textContent = users[usernameInput].balance;
+    });
+
+    socket.on('updateBalance', (balance) => {
+      balanceSpan.textContent = balance;
+    });
+
+    socket.on('transactionHistory', (transactions) => {
+      transactionsList.innerHTML = '';
+      transactions.forEach(transaction => {
+        const li = document.createElement('li');
+        li.textContent = `${transaction.from} sent ${transaction.amount} to ${transaction.to} on ${new Date(transaction.date).toLocaleString()}`;
+        transactionsList.appendChild(li);
+      });
+    });
+
+    socket.on('error', (message) => {
+      alert(message);
+    });
+  </script>
+</body>
+</html>

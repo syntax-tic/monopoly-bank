@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+    <style>
+        .card {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 200px; /* Adjust width as needed */
+            max-width: 100%; /* Ensure it's responsive */
+            display: inline-block;
+            vertical-align: top;
+        }
+        .card.dark {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="cardDetails" style="display: flex; flex-wrap: wrap;"></div>
+</body>
+<script type="module">
+    import cardNames from './cards.js';
+    window.buyProperty = function(key) {
+    console.log('clicked');
+    cardNames[key].owner = 'You';
+    displayCards();
+    };
+    const cardDetails = document.getElementById('cardDetails');
+    function displayCards() {
+    cardDetails.innerHTML = '';
+    for (const key in cardNames) {
+            if (cardNames.hasOwnProperty(key)) {
+                const card = cardNames[key];
+                let div = document.createElement('div');
+                let btn = document.createElement('button');
+                
+                btn.innerText = 'Buy';
+                btn.setAttribute('onclick', `buyProperty(${key})`);
+                if(card.owner!='Bank') {btn.disabled = true;}
+                div.className = `card ${card.color === 'black' ? 'dark' : ''}`;
+                div.innerHTML = `<strong>Title:</strong> ${card.title}<br><strong>Owner:</strong> ${card.owner}<br>`;
+                div.style.backgroundColor = card.color;
+                div.style.margin = '10px';
+                div.style.padding = '10px';
+                div.append(btn);
+                cardDetails.append(div);
+            }
+        }
+    }
+    displayCards();
+</script>
+</html>

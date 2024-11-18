@@ -1,0 +1,324 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, red, #ffa500,indigo,  yellow, green, violet);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    animation: gradientAnimation 15s ease infinite;
+    background-size: 400% 400%;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+#frm, .details {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+    color: #00796b;
+}
+
+input[type=text], input[type=email], input[type=number] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #2d2b2bcd;
+    margin: 2% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    height: 70%;
+    max-width: 500px;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type=submit], button {
+    background-color: #00796b;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+input[type=submit]:hover, button:hover {
+    background-color: #004d40;
+}
+
+.details {
+    max-width: 700px;
+    margin: 20px auto;
+    display: none; 
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+}
+
+.details div {
+    margin-bottom: 20px;
+}
+
+.details h2, .details h3 {
+    color: #00796b;
+}
+
+.details ul {
+    list-style-type: none;
+    padding: 0;
+    height: 20%;
+    overflow:scroll;
+    display: none;
+}
+
+.details ul li {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    color: #333;
+    position: relative;
+    border-left: 6px solid #00a6ff;
+}
+
+.details ul li strong {
+    font-weight: bold;
+    color: #00a6ff;
+}
+
+.show{
+    display: block;
+}
+
+.details label {
+    display: block;
+    font-weight: bold;
+    color: #00796b;
+    margin-top: 10px;
+}
+
+.details input[type=number] {
+    width: calc(100% - 24px);
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#loan{
+    display: none;
+    border: 2px solid #00796b;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: auto;
+    transition: max-height 2s ease;
+}
+#loanDetails:hover {
+    background-color: #005f4f;
+}
+
+/* Hover effect when the button is in "close" state */
+#loanDetails.close {
+    background-color: rgb(228, 81, 81);
+}
+
+/* Hover effect when the button is in "close" state */
+#loanDetails.close:hover {
+    background-color: rgb(200, 60, 60);
+}
+
+#dice-container {
+    perspective: 1000px;
+    display: flex; /* Use flexbox to position the dice */
+    justify-content: center; /* Center the dice */
+    margin: 10px auto;
+}
+
+#dice1, #dice2 {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg);
+    transition: transform 2s;
+    margin: 0 20px; /* Add horizontal margin between dice */
+}
+
+.face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: black;
+}
+.face img {
+    width: 100%;
+    height: 100%;
+    filter: invert(100%);
+}
+.front  { transform: translateZ(50px); }
+.back   { transform: rotateY(180deg) translateZ(50px); }
+.left   { transform: rotateY(-90deg) translateZ(50px); }
+.right  { transform: rotateY(90deg) translateZ(50px); }
+.top    { transform: rotateX(90deg) translateZ(50px); }
+.bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+#roll-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 200px; /* Adjust width as needed */
+    max-width: 100%; /* Ensure it's responsive */
+    display: inline-block;
+    vertical-align: top;
+}
+.card.dark {
+    color: white;
+}
+
+.btn-disabled, .btn-disabled:hover{
+    background-color: #aaa;
+    cursor:not-allowed;
+}
+
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1003;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content2 {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 5px;
+    position: relative;
+    display: block;
+}
+
+.close3 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close3:hover,
+.close3:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+#showHide {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  #showHide::before {
+    content: '';
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(45deg); /* Arrow pointing down */
+    transition: transform 0.3s ease;
+  }
+  
+  /* When the button is clicked, rotate the arrow */
+  #showHide.rotate::before {
+    transform: rotate(225deg); /* Arrow pointing up */
+  }
+  #profilePic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+  }
+  #fileInput {
+    margin-top: 10px;
+  }
+  
+

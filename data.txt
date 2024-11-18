@@ -1,0 +1,12 @@
+
+7/16/2024, 10:42:34 AM
+User Data
+{"a":{"credit_card":"a","cvv":"a","balance":380,"loanAmt":12}}
+Transactions:
+[" a  received <strong>200</strong> as salary on 7/16/2024, 10:42:07 AM","<strong>a</strong> payed <strong>1332</strong> to <strong>Bank</strong> on 7/16/2024, 10:42:20 AM","<strong>a</strong> took a loan of <strong>12</strong> with interest of <strong>0%</strong> on 7/16/2024, 10:42:28 AM"]
+
+7/16/2024, 10:45:22 AM
+User Data
+{"a":{"credit_card":"a","cvv":"a","balance":2100,"loanAmt":0}}
+Transactions:
+[" a </strong> received 200</strong> as salary on 7/16/2024, 10:45:20 AM"," a </strong> received 200</strong> as salary on 7/16/2024, 10:45:20 AM"," a </strong> received 200</strong> as salary on 7/16/2024, 10:45:20 AM"]
